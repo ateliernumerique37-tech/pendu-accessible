@@ -1,0 +1,43 @@
+<svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e3f2fd"/>
+      <stop offset="100%" stop-color="#bbdefb"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="10" y="10" width="1180" height="610" rx="24" fill="none" stroke="#0d47a1" stroke-width="10"/>
+
+  <!-- Potence stylisée -->
+  <g stroke="#0d47a1" stroke-width="10" stroke-linecap="round">
+    <line x1="130" y1="500" x2="290" y2="500"/>
+    <line x1="180" y1="500" x2="180" y2="140"/>
+    <line x1="180" y1="140" x2="340" y2="140"/>
+    <line x1="340" y1="140" x2="340" y2="190"/>
+  </g>
+  <circle cx="340" cy="230" r="38" fill="none" stroke="#1565c0" stroke-width="8"/>
+  <line x1="340" y1="268" x2="340" y2="360" stroke="#1565c0" stroke-width="8" stroke-linecap="round"/>
+  <line x1="340" y1="300" x2="300" y2="330" stroke="#1565c0" stroke-width="8" stroke-linecap="round"/>
+  <line x1="340" y1="300" x2="380" y2="330" stroke="#1565c0" stroke-width="8" stroke-linecap="round"/>
+  <line x1="340" y1="360" x2="305" y2="420" stroke="#1565c0" stroke-width="8" stroke-linecap="round"/>
+  <line x1="340" y1="360" x2="375" y2="420" stroke="#1565c0" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- Cases de lettres -->
+  <g font-family="sans-serif" font-weight="800" font-size="52" text-anchor="middle" fill="#0d47a1">
+    <rect x="640" y="220" width="80" height="80" rx="10" fill="#ffffff" stroke="#0d47a1" stroke-width="6"/>
+    <text x="680" y="278">P</text>
+    <rect x="734" y="220" width="80" height="80" rx="10" fill="#ffffff" stroke="#0d47a1" stroke-width="6"/>
+    <text x="774" y="278">E</text>
+    <rect x="828" y="220" width="80" height="80" rx="10" fill="#ffffff" stroke="#0d47a1" stroke-width="6"/>
+    <text x="868" y="278">N</text>
+    <rect x="922" y="220" width="80" height="80" rx="10" fill="#ffffff" stroke="#0d47a1" stroke-width="6"/>
+    <text x="962" y="278">D</text>
+    <rect x="1016" y="220" width="80" height="80" rx="10" fill="#ffffff" stroke="#0d47a1" stroke-width="6"/>
+    <text x="1056" y="278">U</text>
+  </g>
+
+  <text x="700" y="150" text-anchor="middle" font-family="sans-serif" font-size="66" font-weight="800" fill="#0d47a1">Pendu Accessible</text>
+  <text x="600" y="470" text-anchor="middle" font-family="sans-serif" font-size="30" font-weight="600" fill="#0d47a1">Facile · Moyen · Difficile</text>
+  <text x="600" y="515" text-anchor="middle" font-family="sans-serif" font-size="26" fill="#1565c0">Gratuit &amp; 100% jouable au lecteur d'écran</text>
+</svg>

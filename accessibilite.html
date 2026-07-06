@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1565c0" />
+
+  <title>Déclaration d'accessibilité — Pendu Accessible</title>
+  <meta name="description" content="Déclaration d'accessibilité du Pendu Accessible : démarche suivie, fonctionnalités accessibles mises en œuvre, et moyens de signaler un problème." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Atelier Numérique 37" />
+  <link rel="canonical" href="https://ateliernumerique37-tech.github.io/pendu-accessible/accessibilite.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Déclaration d'accessibilité — Pendu Accessible" />
+  <meta property="og:description" content="Démarche d'accessibilité suivie pour le Pendu Accessible et moyens de signaler un problème." />
+  <meta property="og:url" content="https://ateliernumerique37-tech.github.io/pendu-accessible/accessibilite.html" />
+  <meta property="og:image" content="https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="Pendu Accessible" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Déclaration d'accessibilité — Pendu Accessible" />
+  <meta name="twitter:image" content="https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%231565c0'/><text x='96' y='135' font-size='110' text-anchor='middle'>🔤</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Déclaration d'accessibilité — Pendu Accessible",
+    "description": "Démarche d'accessibilité suivie pour le Pendu Accessible et moyens de signaler un problème.",
+    "url": "https://ateliernumerique37-tech.github.io/pendu-accessible/accessibilite.html",
+    "inLanguage": "fr",
+    "publisher": { "@type": "Organization", "name": "Atelier Numérique 37" }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu principal</a>
+
+  <header class="site-header">
+    <p class="site-title">🔤 Pendu Accessible</p>
+    <nav aria-label="Navigation du site">
+      <a href="index.html">Jouer</a>
+      <a href="regles.html">Règles du jeu</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <h1>Déclaration d'accessibilité</h1>
+
+    <p>
+      <strong>Atelier Numérique 37</strong> s'engage à rendre le site
+      « Pendu Accessible » accessible, conformément au Référentiel Général
+      d'Amélioration de l'Accessibilité (RGAA) et aux Web Content
+      Accessibility Guidelines (WCAG).
+    </p>
+
+    <h2>État de conformité</h2>
+    <p>
+      Ce site a été <strong>conçu dès l'origine</strong> pour respecter les
+      critères RGAA/WCAG — l'accessibilité n'a pas été ajoutée après coup,
+      elle a orienté les choix d'architecture (voir ci-dessous). À ce stade,
+      il s'agit d'une <strong>auto-évaluation</strong> réalisée pendant le
+      développement, et non d'un audit RGAA formel (109 critères, échantillon
+      de pages, méthodologie officielle) réalisé par un tiers. Un audit
+      complet reste à mener pour établir un taux de conformité certifié.
+    </p>
+
+    <h2>Fonctionnalités d'accessibilité mises en œuvre</h2>
+    <ul>
+      <li>Jeu entièrement jouable au clavier, sans souris</li>
+      <li>Annonces automatiques (zones <code>aria-live</code>) à chaque tentative de lettre : correspondance, position, erreurs restantes</li>
+      <li>Double région d'annonce alternée, pour qu'un lecteur d'écran relise bien une annonce même identique à la précédente</li>
+      <li>Cases du mot et lettres déjà tentées consultables individuellement au clavier, avec une description explicite pour chaque case</li>
+      <li>Étiquettes de formulaire explicites, aucun <code>aria-label</code> redondant sur un texte déjà visible (WCAG 2.5.3)</li>
+      <li>Gestion du focus explicite à chaque changement d'écran (focus renvoyé sur l'action pertinente)</li>
+      <li>Respect de <code>prefers-reduced-motion</code> et prise en charge du mode contraste élevé</li>
+      <li>Compatibilité avec le mode sombre du système</li>
+      <li>Lien d'évitement ("Aller au contenu principal") en début de page</li>
+    </ul>
+
+    <h2>Contenus non testés</h2>
+    <p>
+      Aucun test formel n'a encore été réalisé avec des utilisateurs de
+      technologies d'assistance variées (lecteurs d'écran multiples,
+      plages braille, logiciels de reconnaissance vocale). Cette déclaration
+      sera mise à jour après ces tests.
+    </p>
+
+    <h2>Établissement de cette déclaration</h2>
+    <p>Cette déclaration a été établie lors de la mise en ligne initiale du site.</p>
+
+    <h2>Retour d'information et contact</h2>
+    <p>
+      Si vous rencontrez un problème d'accessibilité sur ce site, vous pouvez
+      le signaler à l'adresse : <a href="mailto:ateliernumerique37@gmail.com">ateliernumerique37@gmail.com</a>.
+    </p>
+
+    <p><a href="index.html">← Retourner au jeu</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <p>Jeu gratuit, sans compte, sans publicité — <a href="regles.html">règles du jeu</a></p>
+  </footer>
+</body>
+</html>

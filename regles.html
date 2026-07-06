@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1565c0" />
+
+  <title>Règles du jeu — Pendu Accessible</title>
+  <meta name="description" content="Comment jouer au Pendu Accessible : choix de la difficulté, saisie des lettres, annonces sonores, fin de partie. Règles complètes du jeu du pendu en ligne." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Atelier Numérique 37" />
+  <link rel="canonical" href="https://ateliernumerique37-tech.github.io/pendu-accessible/regles.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Règles du jeu — Pendu Accessible" />
+  <meta property="og:description" content="Comment jouer au Pendu Accessible : choix de la difficulté, saisie des lettres, annonces sonores, fin de partie." />
+  <meta property="og:url" content="https://ateliernumerique37-tech.github.io/pendu-accessible/regles.html" />
+  <meta property="og:image" content="https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="Pendu Accessible" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Règles du jeu — Pendu Accessible" />
+  <meta name="twitter:image" content="https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%231565c0'/><text x='96' y='135' font-size='110' text-anchor='middle'>🔤</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Règles du jeu — Pendu Accessible",
+    "description": "Comment jouer au Pendu Accessible : choix de la difficulté, saisie des lettres, annonces sonores, fin de partie.",
+    "url": "https://ateliernumerique37-tech.github.io/pendu-accessible/regles.html",
+    "image": "https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png",
+    "inLanguage": "fr",
+    "publisher": { "@type": "Organization", "name": "Atelier Numérique 37" }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu principal</a>
+
+  <header class="site-header">
+    <p class="site-title">🔤 Pendu Accessible</p>
+    <nav aria-label="Navigation du site">
+      <a href="index.html">Jouer</a>
+      <a href="accessibilite.html">Accessibilité</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <h1>Règles du jeu</h1>
+
+    <p>
+      Le but du jeu est de deviner un mot caché, lettre par lettre, avant
+      d'accumuler trop d'erreurs.
+    </p>
+
+    <h2>1. Choisir une difficulté</h2>
+    <p>La difficulté détermine la longueur du mot à deviner :</p>
+    <ul>
+      <li><strong>Facile</strong> : mots de 4 à 5 lettres</li>
+      <li><strong>Moyen</strong> : mots de 6 à 8 lettres</li>
+      <li><strong>Difficile</strong> : mots de 9 à 14 lettres</li>
+    </ul>
+
+    <h2>2. Proposer des lettres</h2>
+    <p>
+      Saisissez une lettre dans le champ de saisie et validez avec la touche
+      Entrée (ou le bouton "Valider"). Le champ se vide automatiquement après
+      chaque tentative, prêt pour la lettre suivante.
+    </p>
+    <p>
+      Si la lettre proposée fait partie du mot, sa position est annoncée et
+      la ou les cases correspondantes sont révélées. Sinon, une erreur est
+      comptabilisée.
+    </p>
+
+    <h2>3. Les cases du mot</h2>
+    <p>
+      Une case par lettre du mot est affichée : vide tant que la lettre n'a
+      pas été trouvée, ou révélée une fois devinée. Chaque case peut être
+      consultée individuellement au clavier (touche Tabulation).
+    </p>
+
+    <h2>4. Lettres déjà tentées</h2>
+    <p>
+      La liste des lettres déjà proposées est affichée sous les cases du mot,
+      pour éviter de reproposer une lettre déjà tentée.
+    </p>
+
+    <h2>5. Fin de partie</h2>
+    <p>
+      La partie se termine par une victoire si toutes les lettres du mot sont
+      trouvées, ou par une défaite après <strong>6 erreurs</strong>. Le mot
+      est alors révélé en entier. Un bouton "Nouveau mot" permet de relancer
+      immédiatement une partie dans la même difficulté.
+    </p>
+
+    <h2>6. Accents et majuscules</h2>
+    <p>
+      Inutile de vous soucier des accents : proposer la lettre "e" trouve
+      aussi bien "é", "è" ou "ê" dans le mot. La case affiche toujours la
+      vraie orthographe du mot.
+    </p>
+
+    <p><a href="index.html">← Retourner au jeu</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <p>Jeu gratuit, sans compte, sans publicité — <a href="accessibilite.html">déclaration d'accessibilité</a></p>
+  </footer>
+</body>
+</html>

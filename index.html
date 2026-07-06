@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1565c0" />
+
+  <title>Pendu Accessible — Jeu du pendu gratuit et 100% accessible</title>
+  <meta name="description" content="Jouez au pendu gratuitement, en français, dans un jeu conçu pour être 100% jouable au lecteur d'écran. Trois niveaux de difficulté, aucune inscription, installable comme application." />
+  <meta name="keywords" content="pendu, jeu du pendu, jeu de lettres, jeu accessible, malvoyant, non-voyant, lecteur d'écran, RGAA, PWA, jeu gratuit" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Atelier Numérique 37" />
+  <link rel="canonical" href="https://ateliernumerique37-tech.github.io/pendu-accessible/" />
+
+  <!-- Open Graph / réseaux sociaux et robots IA qui lisent les métadonnées de partage -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Pendu Accessible — Jeu du pendu gratuit et 100% accessible" />
+  <meta property="og:description" content="Jeu du pendu en français, 100% jouable au lecteur d'écran, trois niveaux de difficulté, installable comme application gratuite." />
+  <meta property="og:url" content="https://ateliernumerique37-tech.github.io/pendu-accessible/" />
+  <meta property="og:image" content="https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="Pendu Accessible" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pendu Accessible — Jeu du pendu gratuit et 100% accessible" />
+  <meta name="twitter:description" content="Jeu du pendu en français, 100% jouable au lecteur d'écran, trois niveaux de difficulté." />
+  <meta name="twitter:image" content="https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png" />
+
+  <!-- Favicon : icône PWA réutilisée en SVG inline -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%231565c0'/><text x='96' y='135' font-size='110' text-anchor='middle'>🔤</text></svg>" />
+
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Pendu Accessible" />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Données structurées schema.org : source la plus fiable pour qu'un moteur
+       IA (ChatGPT, Perplexity, Google AI Overviews...) comprenne le site sans
+       avoir à exécuter le JavaScript de l'application. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    "name": "Pendu Accessible",
+    "alternateName": "Jeu du pendu accessible en ligne",
+    "description": "Jeu du pendu en français, jouable en solo, avec trois niveaux de difficulté selon la longueur des mots. Conçu en priorité pour être jouable par des utilisateurs non-voyants au lecteur d'écran.",
+    "url": "https://ateliernumerique37-tech.github.io/pendu-accessible/",
+    "image": "https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png",
+    "applicationCategory": "GameApplication",
+    "genre": "Word Game",
+    "gamePlatform": "Web Browser",
+    "operatingSystem": "Tout appareil avec navigateur web",
+    "inLanguage": "fr",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "numberOfPlayers": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 1 },
+    "accessibilityFeature": ["ARIA", "highContrastDisplay", "readingOrder", "structuralNavigation", "alternativeText"],
+    "accessibilityHazard": "none",
+    "accessibilityControl": ["fullKeyboardControl", "fullMouseControl", "fullTouchControl"],
+    "publisher": { "@type": "Organization", "name": "Atelier Numérique 37" }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Filet pour les robots (notamment certains robots IA) qui n'exécutent
+       pas le JavaScript de l'application : sans JS, l'écran de jeu reste
+       caché. Ce bloc donne un contenu textuel réel et un lien vers les règles. -->
+  <noscript>
+    <main style="max-width:640px;margin:2rem auto;padding:1.5rem;font-family:sans-serif;line-height:1.6;">
+      <h1>Pendu Accessible — Jeu du pendu gratuit et 100% accessible</h1>
+      <p>
+        Jeu du pendu en français, jouable gratuitement, avec trois niveaux de
+        difficulté (facile, moyen, difficile) selon la longueur des mots.
+        Conçu en priorité pour être jouable par des personnes non-voyantes au
+        lecteur d'écran : saisie au clavier, annonces sonores à chaque
+        tentative, aucune souris requise.
+      </p>
+      <p>Ce jeu nécessite JavaScript pour fonctionner. Merci de l'activer dans votre navigateur.</p>
+      <p><a href="regles.html">Consulter les règles du jeu</a> — <a href="accessibilite.html">Déclaration d'accessibilité</a></p>
+    </main>
+  </noscript>
+
+  <a class="skip-link" href="#main">Aller au contenu principal</a>
+
+  <header class="site-header">
+    <p class="site-title">🔤 Pendu Accessible</p>
+    <nav aria-label="Navigation du site">
+      <a href="regles.html">Règles du jeu</a>
+      <a href="accessibilite.html">Accessibilité</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Régions d'annonces ARIA, invisibles à l'écran -->
+    <div id="aria-status-a" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+    <div id="aria-status-b" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+    <div id="aria-alert" role="alert" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+
+    <!-- Écran 1 : choix de la difficulté -->
+    <section id="screen-difficulty" class="screen">
+      <h1>Le Pendu Accessible</h1>
+      <p>Devinez le mot caché en proposant des lettres, avant d'épuiser vos 6 erreurs.</p>
+      <fieldset class="difficulty-fieldset">
+        <legend>Choisissez une difficulté</legend>
+        <button type="button" class="difficulty-btn" data-difficulty="facile">
+          Facile <span class="difficulty-range">4 à 5 lettres</span>
+        </button>
+        <button type="button" class="difficulty-btn" data-difficulty="moyen">
+          Moyen <span class="difficulty-range">6 à 8 lettres</span>
+        </button>
+        <button type="button" class="difficulty-btn" data-difficulty="difficile">
+          Difficile <span class="difficulty-range">9 à 14 lettres</span>
+        </button>
+      </fieldset>
+    </section>
+
+    <!-- Écran 2 : partie en cours -->
+    <section id="screen-game" class="screen" hidden>
+      <h1>Trouvez le mot</h1>
+      <p id="word-length-info">On cherche un mot de <span id="word-length">0</span> lettres.</p>
+
+      <form id="guess-form" class="guess-form">
+        <label for="letter-input">Proposer une lettre</label>
+        <input type="text" id="letter-input" maxlength="1" autocomplete="off" inputmode="text" autocapitalize="characters" />
+        <button type="submit">Valider</button>
+      </form>
+
+      <ul id="word-boxes" class="word-boxes" aria-label="Mot à deviner"></ul>
+
+      <p id="errors-counter">Erreurs : <span id="errors-value">0</span> / <span id="errors-max">6</span></p>
+
+      <svg id="hangman-drawing" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+        <line x1="20" y1="190" x2="100" y2="190" stroke="currentColor" stroke-width="4" />
+        <line x1="50" y1="190" x2="50" y2="20" stroke="currentColor" stroke-width="4" />
+        <line x1="50" y1="20" x2="130" y2="20" stroke="currentColor" stroke-width="4" />
+        <line x1="130" y1="20" x2="130" y2="40" stroke="currentColor" stroke-width="4" />
+        <circle class="stage" cx="130" cy="55" r="15" fill="none" stroke="currentColor" stroke-width="4" />
+        <line class="stage" x1="130" y1="70" x2="130" y2="120" stroke="currentColor" stroke-width="4" />
+        <line class="stage" x1="130" y1="85" x2="110" y2="100" stroke="currentColor" stroke-width="4" />
+        <line class="stage" x1="130" y1="85" x2="150" y2="100" stroke="currentColor" stroke-width="4" />
+        <line class="stage" x1="130" y1="120" x2="115" y2="150" stroke="currentColor" stroke-width="4" />
+        <line class="stage" x1="130" y1="120" x2="145" y2="150" stroke="currentColor" stroke-width="4" />
+      </svg>
+
+      <h2>Lettres déjà tentées</h2>
+      <ul id="tried-letters" class="tried-letters" aria-label="Lettres déjà tentées"></ul>
+
+      <button type="button" id="btn-repeat" class="btn-secondary">Répéter la dernière annonce</button>
+    </section>
+
+    <!-- Écran 3 : fin de partie -->
+    <section id="screen-end" class="screen" hidden>
+      <h1 id="end-heading">Fin de partie</h1>
+      <p id="end-message"></p>
+      <button type="button" id="btn-new-word">Nouveau mot</button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Jeu gratuit, sans compte, sans publicité — <a href="accessibilite.html">déclaration d'accessibilité</a></p>
+  </footer>
+
+  <script src="bundle.js"></script>
+</body>
+</html>
