@@ -217,6 +217,14 @@ toujours chargée quand l'appareil est en ligne, sans dépendre du bump manuel d
 - Branche `master`, déploiement automatique à chaque push
 - `.nojekyll` à la racine (site statique fait main)
 
+**Mise en place initiale du repo + Pages (fait une seule fois)** :
+```bash
+gh repo create ateliernumerique37-tech/pendu-accessible --public --source=. --remote=origin --push
+gh api -X POST repos/ateliernumerique37-tech/pendu-accessible/pages \
+  -f "build_type=legacy" -f "source[branch]=master" -f "source[path]=/"
+```
+Vérifier le build : `gh api repos/ateliernumerique37-tech/pendu-accessible/pages/builds/latest`.
+
 ---
 
 ## SEO — référencement classique et moteurs IA

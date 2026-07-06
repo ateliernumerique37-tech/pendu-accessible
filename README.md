@@ -3,6 +3,7 @@
 Jeu du pendu en français, jouable en solo avec trois niveaux de difficulté, conçu en priorité pour être **jouable sans jamais voir l'écran**.
 
 🔗 **Jouer** : https://ateliernumerique37-tech.github.io/pendu-accessible/
+🔗 **Voir mes autres projets** : https://ateliernumerique37-tech.github.io/hub-numerique/
 
 ## Objectif du projet
 
@@ -14,10 +15,16 @@ correspondance et sa position, le nombre d'erreurs restantes est toujours dit
 à voix haute, et rien d'important ne repose uniquement sur le dessin du pendu
 qui, lui, reste purement décoratif.
 
-Trois niveaux de difficulté, selon la longueur du mot à deviner :
-- **Facile** : 4 à 5 lettres
-- **Moyen** : 6 à 8 lettres
-- **Difficile** : 9 à 14 lettres
+Le compteur d'erreurs n'est pas un total figé sur toute la partie : il repart
+à zéro à chaque bonne lettre trouvée. Seule une **série d'erreurs d'affilée**
+fait perdre, ce qui reste cohérent quel que soit le nombre de lettres à
+trouver dans le mot.
+
+Trois niveaux de difficulté, selon la longueur du mot à deviner et la
+tolérance aux erreurs d'affilée :
+- **Facile** : 4 à 5 lettres, 6 erreurs d'affilée autorisées
+- **Moyen** : 6 à 8 lettres, 8 erreurs d'affilée autorisées
+- **Difficile** : 9 à 14 lettres, 10 erreurs d'affilée autorisées
 
 ## Stack technique
 
