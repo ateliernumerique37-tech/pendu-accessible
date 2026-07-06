@@ -85,7 +85,7 @@ Distribution actuelle (vérifiée par script) : 89 mots facile, 181 moyen, 70 di
 - `guessLetter(state, rawLetter)` → mute l'état, retourne un résultat décrivant
   ce qui vient de se passer (pour que `ui.js` construise l'annonce)
 - `getBoxes(state)` → représentation des cases (révélée ou vide)
-- `MAX_ERRORS = 10`
+- `MAX_ERRORS_BY_DIFFICULTY = { facile: 6, moyen: 8, difficile: 10 }`
 
 **État du jeu :**
 ```js
@@ -94,10 +94,21 @@ Distribution actuelle (vérifiée par script) : 89 mots facile, 181 moyen, 70 di
   uniqueLetters,      // Set des lettres normalisées uniques du mot
   foundLetters,       // Set des lettres normalisées trouvées
   triedLetters,       // [{ letter, hit }] dans l'ordre de saisie
-  errors, phase,      // 'playing' | 'won' | 'lost'
+  errors,             // erreurs CONSÉCUTIVES depuis la dernière bonne lettre — remis à 0 sur un hit
+  maxErrors,          // MAX_ERRORS_BY_DIFFICULTY[difficulty], figé à la création de la partie
+  phase,              // 'playing' | 'won' | 'lost'
   milestonesShown,    // Set('half' | 'two-left') — jamais répétés
 }
 ```
+
+> ⚠️ **`errors` n'est PAS un total cumulé sur toute la partie** — c'est une
+> série d'erreurs sans succès entre elles. Chaque lettre trouvée remet le
+> compteur à 0 (`guessLetter`, branche `hit`). La défaite survient quand cette
+> série atteint `state.maxErrors`, qui dépend de la difficulté (6/8/10) et non
+> d'une constante globale unique. Décision utilisateur : avec un total cumulé
+> fixe, un mot avec beaucoup de lettres rares serait quasi impossible à
+> trouver ; remettre le compteur à zéro à chaque succès et faire varier le
+> seuil par difficulté est plus cohérent avec la longueur du mot à deviner.
 
 **Jalons d'encouragement (`checkMilestone`)** : détectés par **transition**
 (comparaison avant/après la tentative), jamais par simple état statique — ça
@@ -142,10 +153,14 @@ assertive déjà émise. Un second bouton "Retour à l'accueil et changer de
 difficulté" (`btn-change-difficulty`) ramène à l'écran de choix de difficulté
 (`onChangeDifficulty` dans `main.js`, remet `state` à `null`).
 
-**Dessin du pendu (SVG, décoratif)** : les 10 `.stage` incluent désormais la
-potence elle-même (sol, poteau, poutre, corde) en plus des 6 parties du
-personnage — chaque erreur révèle une étape de plus, jusqu'à la potence
-complète à la 10ᵉ erreur. `MAX_ERRORS = 10` correspond au nombre de `.stage`.
+**Dessin du pendu (SVG, décoratif)** : 10 `.stage` fixes dans le HTML (potence :
+sol, poteau, poutre, corde + personnage : tête, torse, 2 bras, 2 jambes).
+`renderErrors(errors, maxErrors)` révèle les `errors` premières étapes — comme
+`errors` repart à 0 à chaque bonne lettre, le dessin **se réinitialise
+visuellement dès qu'une lettre est trouvée**, ce qui renforce le message "vous
+avez repris de la marge". En facile/moyen (`maxErrors` 6/8), les dernières
+étapes du gabarit à 10 ne sont simplement jamais atteintes — pas besoin de
+prévoir un SVG différent par difficulté.
 
 ### `js/main.js` — Orchestrateur
 

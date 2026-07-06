@@ -1,5 +1,5 @@
 // Orchestrateur — point d'entrée du bundle.
-import { createGame, guessLetter, getBoxes, MAX_ERRORS } from './game.js';
+import { createGame, guessLetter, getBoxes } from './game.js';
 import {
   announce,
   announceGuessResult,
@@ -24,7 +24,7 @@ function renderAll() {
   renderWordLength(state.word.length);
   renderBoxes(getBoxes(state));
   renderTriedLetters(state.triedLetters);
-  renderErrors(state.errors, MAX_ERRORS);
+  renderErrors(state.errors, state.maxErrors);
 }
 
 function startGame(difficulty, avoidWord = null) {

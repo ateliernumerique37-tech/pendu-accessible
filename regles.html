@@ -53,16 +53,19 @@
     <h1>Règles du jeu</h1>
 
     <p>
-      Le but du jeu est de deviner un mot caché, lettre par lettre, avant
-      d'accumuler trop d'erreurs.
+      Le but du jeu est de deviner un mot caché, lettre par lettre, sans
+      enchaîner trop d'erreurs d'affilée.
     </p>
 
     <h2>1. Choisir une difficulté</h2>
-    <p>La difficulté détermine la longueur du mot à deviner :</p>
+    <p>
+      La difficulté détermine la longueur du mot à deviner, et le nombre
+      d'erreurs d'affilée tolérées avant de perdre :
+    </p>
     <ul>
-      <li><strong>Facile</strong> : mots de 4 à 5 lettres</li>
-      <li><strong>Moyen</strong> : mots de 6 à 8 lettres</li>
-      <li><strong>Difficile</strong> : mots de 9 à 14 lettres</li>
+      <li><strong>Facile</strong> : mots de 4 à 5 lettres, 6 erreurs d'affilée autorisées</li>
+      <li><strong>Moyen</strong> : mots de 6 à 8 lettres, 8 erreurs d'affilée autorisées</li>
+      <li><strong>Difficile</strong> : mots de 9 à 14 lettres, 10 erreurs d'affilée autorisées</li>
     </ul>
 
     <h2>2. Proposer des lettres</h2>
@@ -72,9 +75,11 @@
       chaque tentative, prêt pour la lettre suivante.
     </p>
     <p>
-      Si la lettre proposée fait partie du mot, sa position est annoncée et
-      la ou les cases correspondantes sont révélées. Sinon, une erreur est
-      comptabilisée.
+      Si la lettre proposée fait partie du mot, sa position est annoncée, la
+      ou les cases correspondantes sont révélées, et votre compteur d'erreurs
+      revient à zéro. Sinon, une erreur est comptabilisée : ce sont les
+      erreurs <strong>d'affilée, sans bonne lettre entre elles</strong> qui
+      comptent — une bonne réponse vous fait toujours repartir de zéro.
     </p>
 
     <h2>3. Les cases du mot</h2>
@@ -93,10 +98,11 @@
     <h2>5. Fin de partie</h2>
     <p>
       La partie se termine par une victoire si toutes les lettres du mot sont
-      trouvées, ou par une défaite après <strong>10 erreurs</strong>. Le mot
-      est alors révélé en entier. Un bouton "Nouveau mot" permet de relancer
-      immédiatement une partie dans la même difficulté, et un bouton "Retour
-      à l'accueil" permet de changer de difficulté.
+      trouvées, ou par une défaite en cas de trop d'erreurs d'affilée (6, 8
+      ou 10 selon la difficulté choisie). Le mot est alors révélé en entier.
+      Un bouton "Nouveau mot" permet de relancer immédiatement une partie
+      dans la même difficulté, et un bouton "Retour à l'accueil" permet de
+      changer de difficulté.
     </p>
 
     <h2>6. Accents et majuscules</h2>

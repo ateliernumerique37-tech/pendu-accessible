@@ -373,7 +373,7 @@
   }
 
   // js/game.js
-  var MAX_ERRORS = 10;
+  var MAX_ERRORS_BY_DIFFICULTY = { facile: 6, moyen: 8, difficile: 10 };
   function createGame(difficulty, avoidWord = null) {
     const word = pickWord(difficulty, avoidWord);
     const normalizedWord = normalize(word);
@@ -387,6 +387,8 @@
       triedLetters: [],
       // [{ letter, hit }] dans l'ordre de saisie
       errors: 0,
+      // erreurs consécutives depuis la dernière bonne lettre
+      maxErrors: MAX_ERRORS_BY_DIFFICULTY[difficulty],
       phase: "playing",
       // 'playing' | 'won' | 'lost'
       milestonesShown: /* @__PURE__ */ new Set()
@@ -394,7 +396,7 @@
     };
   }
   function getRemainingErrors(state2) {
-    return MAX_ERRORS - state2.errors;
+    return state2.maxErrors - state2.errors;
   }
   function findPositions(state2, normalizedLetter) {
     const positions = [];
@@ -435,11 +437,12 @@
     state2.triedLetters.push({ letter, hit });
     if (hit) {
       state2.foundLetters.add(letter);
+      state2.errors = 0;
       const won = [...state2.uniqueLetters].every((l) => state2.foundLetters.has(l));
       if (won) state2.phase = "won";
     } else {
       state2.errors += 1;
-      if (state2.errors >= MAX_ERRORS) state2.phase = "lost";
+      if (state2.errors >= state2.maxErrors) state2.phase = "lost";
     }
     const milestone = hit ? checkMilestone(state2, beforeRemaining, beforeFoundCount) : null;
     return {
@@ -621,7 +624,7 @@
     renderWordLength(state.word.length);
     renderBoxes(getBoxes(state));
     renderTriedLetters(state.triedLetters);
-    renderErrors(state.errors, MAX_ERRORS);
+    renderErrors(state.errors, state.maxErrors);
   }
   function startGame(difficulty, avoidWord = null) {
     state = createGame(difficulty, avoidWord);
