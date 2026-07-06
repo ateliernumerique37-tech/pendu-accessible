@@ -1,4 +1,4 @@
-# 🔤 Pendu Accessible — PWA du jeu du pendu
+# ❓ Pendu Accessible — PWA du jeu du pendu
 
 Jeu du pendu en français, jouable en solo avec trois niveaux de difficulté, conçu en priorité pour être **jouable sans jamais voir l'écran**.
 
