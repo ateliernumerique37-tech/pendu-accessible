@@ -63,9 +63,10 @@ npx esbuild js/main.js --bundle --outfile=bundle.js --format=iife --platform=bro
 
 ### `js/words.js` — Données et tirage
 
-- `ALL_WORDS` : ~340 noms communs français (pas de noms propres, pas de mots
+- `ALL_WORDS` : ~1080 noms communs français (pas de noms propres, pas de mots
   composés à espace/trait d'union, pas de ligatures œ/æ — remplacées par "oe"/"ae"
-  pour rester compatibles avec `normalize()`).
+  pour rester compatibles avec `normalize()`). Enrichi une première fois en
+  juillet 2026 (+738 mots, section « Enrichissement » en fin de tableau).
 - **Le classement par difficulté n'est pas figé à l'écriture** : `poolForDifficulty()`
   filtre dynamiquement `ALL_WORDS` par longueur réelle (`word.length`). Évite tout
   risque d'erreur de comptage manuel lors de l'ajout de nouveaux mots.
@@ -77,7 +78,7 @@ npx esbuild js/main.js --bundle --outfile=bundle.js --format=iife --platform=bro
 - `pickWord(difficulty, avoidWord)` : tire un mot au hasard, évite de reproposer
   immédiatement le mot précédent quand le pool le permet.
 
-Distribution actuelle (vérifiée par script) : 89 mots facile, 181 moyen, 70 difficile.
+Distribution actuelle (vérifiée par script) : 261 mots facile, 590 moyen, 227 difficile (1078 au total, tous uniques).
 
 ### `js/game.js` — Logique pure (zéro DOM)
 
