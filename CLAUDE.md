@@ -85,7 +85,7 @@ Distribution actuelle (vérifiée par script) : 89 mots facile, 181 moyen, 70 di
 - `guessLetter(state, rawLetter)` → mute l'état, retourne un résultat décrivant
   ce qui vient de se passer (pour que `ui.js` construise l'annonce)
 - `getBoxes(state)` → représentation des cases (révélée ou vide)
-- `MAX_ERRORS = 6`
+- `MAX_ERRORS = 10`
 
 **État du jeu :**
 ```js
@@ -138,7 +138,14 @@ pattern à tabindex géré si ça s'avère pénible en difficile avec beaucoup d
 
 **Fin de partie** : le focus va directement sur le bouton "Nouveau mot" plutôt
 que sur le titre de l'écran, pour éviter une annonce redondante avec l'alerte
-assertive déjà émise.
+assertive déjà émise. Un second bouton "Retour à l'accueil et changer de
+difficulté" (`btn-change-difficulty`) ramène à l'écran de choix de difficulté
+(`onChangeDifficulty` dans `main.js`, remet `state` à `null`).
+
+**Dessin du pendu (SVG, décoratif)** : les 10 `.stage` incluent désormais la
+potence elle-même (sol, poteau, poutre, corde) en plus des 6 parties du
+personnage — chaque erreur révèle une étape de plus, jusqu'à la potence
+complète à la 10ᵉ erreur. `MAX_ERRORS = 10` correspond au nombre de `.stage`.
 
 ### `js/main.js` — Orchestrateur
 

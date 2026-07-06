@@ -13,6 +13,7 @@ import {
   renderWordLength,
   showEndScreen,
   initNewWordButton,
+  initChangeDifficultyButton,
   initRepeatButton,
   repeatLastAnnouncement,
 } from './ui.js';
@@ -64,11 +65,17 @@ function onNewWord() {
   startGame(state.difficulty, state.word);
 }
 
+function onChangeDifficulty() {
+  state = null;
+  showScreen('difficulty');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   showScreen('difficulty');
   initDifficultyScreen(difficulty => startGame(difficulty));
   initGuessForm(onGuess);
   initNewWordButton(onNewWord);
+  initChangeDifficultyButton(onChangeDifficulty);
   initRepeatButton(repeatLastAnnouncement);
 
   if ('serviceWorker' in navigator) {

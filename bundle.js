@@ -373,7 +373,7 @@
   }
 
   // js/game.js
-  var MAX_ERRORS = 6;
+  var MAX_ERRORS = 10;
   function createGame(difficulty, avoidWord = null) {
     const word = pickWord(difficulty, avoidWord);
     const normalizedWord = normalize(word);
@@ -608,6 +608,9 @@
   function initNewWordButton(onClick) {
     $("btn-new-word").addEventListener("click", onClick);
   }
+  function initChangeDifficultyButton(onClick) {
+    $("btn-change-difficulty").addEventListener("click", onClick);
+  }
   function initRepeatButton(onClick) {
     $("btn-repeat").addEventListener("click", onClick);
   }
@@ -650,11 +653,16 @@
   function onNewWord() {
     startGame(state.difficulty, state.word);
   }
+  function onChangeDifficulty() {
+    state = null;
+    showScreen("difficulty");
+  }
   document.addEventListener("DOMContentLoaded", () => {
     showScreen("difficulty");
     initDifficultyScreen((difficulty) => startGame(difficulty));
     initGuessForm(onGuess);
     initNewWordButton(onNewWord);
+    initChangeDifficultyButton(onChangeDifficulty);
     initRepeatButton(repeatLastAnnouncement);
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("./service-worker.js");

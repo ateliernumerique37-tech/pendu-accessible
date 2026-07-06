@@ -105,7 +105,7 @@
     <!-- Écran 1 : choix de la difficulté -->
     <section id="screen-difficulty" class="screen">
       <h1>Le Pendu Accessible</h1>
-      <p>Devinez le mot caché en proposant des lettres, avant d'épuiser vos 6 erreurs.</p>
+      <p>Devinez le mot caché en proposant des lettres, avant d'épuiser vos 10 erreurs.</p>
       <fieldset class="difficulty-fieldset">
         <legend>Choisissez une difficulté</legend>
         <button type="button" class="difficulty-btn" data-difficulty="facile">
@@ -133,13 +133,13 @@
 
       <ul id="word-boxes" class="word-boxes" aria-label="Mot à deviner"></ul>
 
-      <p id="errors-counter">Erreurs : <span id="errors-value">0</span> / <span id="errors-max">6</span></p>
+      <p id="errors-counter">Erreurs : <span id="errors-value">0</span> / <span id="errors-max">10</span></p>
 
       <svg id="hangman-drawing" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
-        <line x1="20" y1="190" x2="100" y2="190" stroke="currentColor" stroke-width="4" />
-        <line x1="50" y1="190" x2="50" y2="20" stroke="currentColor" stroke-width="4" />
-        <line x1="50" y1="20" x2="130" y2="20" stroke="currentColor" stroke-width="4" />
-        <line x1="130" y1="20" x2="130" y2="40" stroke="currentColor" stroke-width="4" />
+        <line class="stage" x1="20" y1="190" x2="100" y2="190" stroke="currentColor" stroke-width="4" />
+        <line class="stage" x1="50" y1="190" x2="50" y2="20" stroke="currentColor" stroke-width="4" />
+        <line class="stage" x1="50" y1="20" x2="130" y2="20" stroke="currentColor" stroke-width="4" />
+        <line class="stage" x1="130" y1="20" x2="130" y2="40" stroke="currentColor" stroke-width="4" />
         <circle class="stage" cx="130" cy="55" r="15" fill="none" stroke="currentColor" stroke-width="4" />
         <line class="stage" x1="130" y1="70" x2="130" y2="120" stroke="currentColor" stroke-width="4" />
         <line class="stage" x1="130" y1="85" x2="110" y2="100" stroke="currentColor" stroke-width="4" />
@@ -159,6 +159,7 @@
       <h1 id="end-heading">Fin de partie</h1>
       <p id="end-message"></p>
       <button type="button" id="btn-new-word">Nouveau mot</button>
+      <button type="button" id="btn-change-difficulty" class="btn-secondary">Retour à l'accueil et changer de difficulté</button>
     </section>
   </main>
 
