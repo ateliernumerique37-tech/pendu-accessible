@@ -80,6 +80,16 @@ npx esbuild js/main.js --bundle --outfile=bundle.js --format=iife --platform=bro
 
 Distribution actuelle (vérifiée par script) : 261 mots facile, 590 moyen, 227 difficile (1078 au total, tous uniques).
 
+**Orthographe accentuée (juillet 2026)** : 217 mots contiennent désormais leur(s)
+accent(s) correct(s) (é/è/ê/à/â/ù/î/ô/ç). Taper une lettre sans accent trouve
+quand même la lettre accentuée correspondante (`normalize()` gère les deux sens),
+et la case/l'annonce de fin de partie affichent toujours la vraie orthographe
+(`ÉCOLE`, `MAÇON`, `CACAHUÈTE`...). Vérifié en conditions réelles : taper "E"
+sur un mot contenant à la fois "È" et "E" révèle les deux positions en un seul
+coup. Toujours pas de ligature œ/æ (ex. `COEUR`, `SOEUR`, `BOEUF`, `OEIL`,
+`OEUF` restent volontairement sans ligature — `œ` ne se décompose pas en NFD,
+la comparaison échouerait).
+
 ### `js/game.js` — Logique pure (zéro DOM)
 
 - `createGame(difficulty, avoidWord)` → état complet (voir ci-dessous)
