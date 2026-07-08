@@ -1008,7 +1008,7 @@
     // Famille (noms communs)
     "PARENT",
     "ENFANT",
-    "FRERE",
+    "FR\xC8RE",
     "SOEUR",
     "COUSIN",
     "COUSINE",
