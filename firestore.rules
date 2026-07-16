@@ -1,0 +1,22 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Compteur public de parties jouées, un document par jour (YYYY-MM-DD).
+    // Aucune authentification : n'importe qui peut incrémenter le jour
+    // courant de 1, mais ne peut jamais écrire une valeur arbitraire ni
+    // toucher à un autre champ. Lecture publique pour la page stats.html.
+    match /stats_daily/{day} {
+      allow read: if true;
+
+      allow create: if request.resource.data.count == 1
+                    && request.resource.data.keys().hasOnly(['count']);
+
+      allow update: if request.resource.data.count == resource.data.count + 1
+                    && request.resource.data.keys().hasOnly(['count']);
+
+      allow delete: if false;
+    }
+  }
+}

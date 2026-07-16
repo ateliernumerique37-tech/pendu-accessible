@@ -33,7 +33,8 @@ Volontairement minimaliste, sans framework :
 - **HTML / CSS / JavaScript vanille**, modules ES bundlés avec `esbuild`
 - **PWA** installable, service worker en stratégie *network-first* pour toujours charger la dernière version
 - **Déploiement continu** sur GitHub Pages à chaque `push`
-- Aucun compte, aucune donnée collectée, liste de mots entièrement embarquée (fonctionne hors-ligne une fois installée)
+- Aucun compte, aucune donnée personnelle collectée, liste de mots entièrement embarquée (fonctionne hors-ligne une fois installée)
+- **Statistiques publiques** (page dédiée) : seul le nombre de parties jouées par jour est enregistré, de façon anonyme, pour calculer des moyennes par jour/semaine/mois/an
 
 ## Choix d'accessibilité
 

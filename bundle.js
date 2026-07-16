@@ -1218,6 +1218,36 @@
     });
   }
 
+  // js/stats-writer.js
+  var FIREBASE_CONFIG = {
+    projectId: "pendu-accessible-stats",
+    appId: "1:1037187434250:web:0cf7c74cf5e5f0f1aa5cf3",
+    apiKey: "AIzaSyCYA1WW_jp6YmkYHbRhcYCEq5AmayVPJmo",
+    authDomain: "pendu-accessible-stats.firebaseapp.com"
+  };
+  var db = null;
+  function getDb() {
+    if (db) return db;
+    if (typeof firebase === "undefined" || !firebase.firestore) return null;
+    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.firestore();
+    return db;
+  }
+  function todayKey() {
+    const d = /* @__PURE__ */ new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  }
+  function recordGamePlayed() {
+    try {
+      const firestore = getDb();
+      if (!firestore) return;
+      firestore.collection("stats_daily").doc(todayKey()).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).catch(() => {
+      });
+    } catch {
+    }
+  }
+
   // js/ui.js
   function $(id) {
     return document.getElementById(id);
@@ -1387,6 +1417,7 @@
     showScreen("game");
     focusGuessInput();
     announce(`Nouvelle partie. On cherche un mot de ${state.word.length} lettres.`);
+    recordGamePlayed();
   }
   function onGuess(letter) {
     const result = guessLetter(state, letter);

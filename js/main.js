@@ -1,5 +1,6 @@
 // Orchestrateur — point d'entrée du bundle.
 import { createGame, guessLetter, getBoxes } from './game.js';
+import { recordGamePlayed } from './stats-writer.js';
 import {
   announce,
   announceGuessResult,
@@ -33,6 +34,7 @@ function startGame(difficulty, avoidWord = null) {
   showScreen('game');
   focusGuessInput();
   announce(`Nouvelle partie. On cherche un mot de ${state.word.length} lettres.`);
+  recordGamePlayed();
 }
 
 function onGuess(letter) {

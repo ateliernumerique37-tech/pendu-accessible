@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1565c0" />
+
+  <title>Statistiques — Pendu Accessible</title>
+  <meta name="description" content="Statistiques publiques du Pendu Accessible : nombre de parties jouées et moyennes par jour, semaine, mois et année." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Atelier Numérique 37" />
+  <link rel="canonical" href="https://ateliernumerique37-tech.github.io/pendu-accessible/stats.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Statistiques — Pendu Accessible" />
+  <meta property="og:description" content="Nombre de parties jouées et moyennes par jour, semaine, mois et année, calculées de façon anonyme." />
+  <meta property="og:url" content="https://ateliernumerique37-tech.github.io/pendu-accessible/stats.html" />
+  <meta property="og:image" content="https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="Pendu Accessible" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Statistiques — Pendu Accessible" />
+  <meta name="twitter:image" content="https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%231565c0'/><text x='96' y='135' font-size='110' text-anchor='middle'>❓</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Statistiques — Pendu Accessible",
+    "description": "Nombre de parties jouées et moyennes par jour, semaine, mois et année, calculées de façon anonyme.",
+    "url": "https://ateliernumerique37-tech.github.io/pendu-accessible/stats.html",
+    "image": "https://ateliernumerique37-tech.github.io/pendu-accessible/og-image.png",
+    "inLanguage": "fr",
+    "publisher": { "@type": "Organization", "name": "Atelier Numérique 37" }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu principal</a>
+
+  <header class="site-header">
+    <p class="site-title">❓ Pendu Accessible</p>
+    <nav aria-label="Navigation du site">
+      <a href="index.html">Jouer</a>
+      <a href="regles.html">Règles du jeu</a>
+      <a href="accessibilite.html">Accessibilité</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <h1>Statistiques</h1>
+
+    <p id="stats-loading" role="status" aria-live="polite">Chargement des statistiques…</p>
+    <p id="stats-empty" hidden>Aucune partie n'a encore été enregistrée. Revenez bientôt !</p>
+    <p id="stats-error" hidden>Statistiques indisponibles pour le moment. Réessayez plus tard.</p>
+
+    <div id="stats-content" hidden>
+      <p>
+        <strong><span id="stat-total"></span></strong> parties jouées au total
+        depuis le <span id="stat-since"></span>, soit <span id="stat-days"></span> <span id="stat-days-label">jours</span>.
+      </p>
+
+      <h2>Moyenne de parties jouées</h2>
+      <ul>
+        <li>Par jour : <strong><span id="stat-per-day"></span></strong></li>
+        <li>Par semaine : <strong><span id="stat-per-week"></span></strong></li>
+        <li>Par mois : <strong><span id="stat-per-month"></span></strong></li>
+        <li>Par an : <strong><span id="stat-per-year"></span></strong></li>
+      </ul>
+    </div>
+
+    <p class="stats-note">
+      Ce site enregistre de façon anonyme le nombre de parties jouées chaque
+      jour (aucune donnée personnelle) pour ces statistiques publiques.
+    </p>
+
+    <p><a href="index.html">← Retourner au jeu</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <p>Jeu gratuit, sans compte, sans publicité — <a href="regles.html">règles du jeu</a></p>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="stats-bundle.js"></script>
+</body>
+</html>

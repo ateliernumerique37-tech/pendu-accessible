@@ -2,16 +2,18 @@
 // purger les vieux caches, mais PLUS critique pour la fraîcheur grâce à la
 // stratégie network-first ci-dessous (voir CLAUDE.md de petits-chevaux pour
 // l'historique du bug que ça évite).
-const CACHE = 'pendu-accessible-v1';
+const CACHE = 'pendu-accessible-v2';
 
 const ASSETS = [
   './',
   './index.html',
   './regles.html',
   './accessibilite.html',
+  './stats.html',
   './style.css',
   './manifest.json',
   './bundle.js',
+  './stats-bundle.js',
   './og-image.png',
 ];
 

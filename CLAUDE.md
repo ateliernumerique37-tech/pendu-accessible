@@ -27,24 +27,31 @@ pendu-accessible/
 ├── index.html          # Écran de difficulté + jeu + fin de partie
 ├── regles.html         # Règles du jeu (page statique classique)
 ├── accessibilite.html  # Déclaration d'accessibilité RGAA
+├── stats.html           # Statistiques publiques (lecture Firestore)
 ├── 404.html            # Page 404 (chemins absolus /pendu-accessible/...)
 ├── style.css            # Feuille de style unique (dark mode, high contrast, reduced motion)
 ├── manifest.json         # PWA manifest (icône SVG inline)
 ├── service-worker.js     # Cache offline, stratégie network-first
-├── bundle.js              # Artefact de build (NE PAS éditer directement)
+├── bundle.js              # Artefact de build du jeu (NE PAS éditer directement)
+├── stats-bundle.js        # Artefact de build de stats.html (NE PAS éditer directement)
+├── firestore.rules        # Règles de sécurité du compteur de parties
+├── firebase.json           # Config déploiement des règles (projet pendu-accessible-stats)
 ├── robots.txt / sitemap.xml
 ├── og-image.svg / og-image.png  # Image de partage 1200×630 (svg = source, non précaché)
 ├── .nojekyll
-└── js/                   # Sources ES Modules (seul main.js committé, reste gitignoré)
-    ├── main.js           # Orchestrateur — cycle de partie, init des écrans
-    ├── game.js           # Logique pure du jeu (aucun DOM)
-    ├── ui.js             # Écrans, annonces ARIA, rendu des cases/lettres tentées
-    └── words.js          # Liste de mots + normalisation accents + tirage
+└── js/                   # Sources ES Modules (main.js et stats-page.js committés, reste gitignoré)
+    ├── main.js           # Orchestrateur du jeu — cycle de partie, init des écrans
+    ├── stats-page.js      # Entrée de bundle de stats.html — lecture Firestore, calcul des moyennes
+    ├── game.js            # Logique pure du jeu (aucun DOM)
+    ├── ui.js              # Écrans, annonces ARIA, rendu des cases/lettres tentées
+    ├── words.js           # Liste de mots + normalisation accents + tirage
+    └── stats-writer.js    # Écriture fire-and-forget du compteur (stats_daily)
 ```
 
-> **Règle Git** : seuls `bundle.js` et `js/main.js` sont commités. `game.js`,
-> `ui.js`, `words.js` sont dans `.gitignore` (bundlés dans `bundle.js`), comme
-> pour petits-chevaux.
+> **Règle Git** : `bundle.js`, `stats-bundle.js`, `js/main.js` et `js/stats-page.js`
+> sont commités (deux points d'entrée de bundle, comme `main.js`). `game.js`,
+> `ui.js`, `words.js`, `stats-writer.js` sont dans `.gitignore` (bundlés dans
+> `bundle.js`), comme pour petits-chevaux.
 
 ---
 
@@ -53,9 +60,11 @@ pendu-accessible/
 ```bash
 cd Projets/pendu-accessible
 npx esbuild js/main.js --bundle --outfile=bundle.js --format=iife --platform=browser
+npx esbuild js/stats-page.js --bundle --outfile=stats-bundle.js --format=iife --platform=browser
 ```
 
-À faire **après chaque modification** d'un fichier `js/`. Bundle ~16 kb (IIFE, non minifié).
+À faire **après chaque modification** d'un fichier `js/`. `bundle.js` ~29 kb,
+`stats-bundle.js` ~2 kb (IIFE, non minifié).
 
 ---
 
@@ -178,6 +187,7 @@ prévoir un SVG différent par difficulté.
 ```
 DOMContentLoaded → showScreen('difficulty') → initDifficultyScreen(startGame)
 startGame(difficulty) → createGame → renderAll → showScreen('game') → focus input
+  → recordGamePlayed() (stats-writer.js, fire-and-forget, jamais bloquant)
 onGuess(letter) → guessLetter → renderAll
   → phase 'won'/'lost' : announce assertive + showEndScreen (skip l'annonce normale)
   → sinon : announceGuessResult (annonce polite normale)
@@ -221,7 +231,8 @@ manuel NVDA + Firefox reste nécessaire** avant de considérer la conformité RG
 Stratégie **network-first** pour le cœur de l'app (HTML/CSS/JS/manifest),
 identique à petits-chevaux v18+ : garantit que la dernière version déployée est
 toujours chargée quand l'appareil est en ligne, sans dépendre du bump manuel de
-`CACHE`. Version actuelle : `pendu-accessible-v1`.
+`CACHE`. Version actuelle : `pendu-accessible-v2` (bump lors de l'ajout de
+`stats.html`/`stats-bundle.js` à `ASSETS`).
 
 ### GitHub Pages
 
@@ -235,6 +246,118 @@ gh api -X POST repos/ateliernumerique37-tech/pendu-accessible/pages \
   -f "build_type=legacy" -f "source[branch]=master" -f "source[path]=/"
 ```
 Vérifier le build : `gh api repos/ateliernumerique37-tech/pendu-accessible/pages/builds/latest`.
+
+---
+
+## Statistiques publiques (Firebase Firestore)
+
+Ajouté en juillet 2026 à la demande de l'utilisateur : moyenne de parties
+jouées par jour/semaine/mois/an, **agrégée sur tous les joueurs** (pas juste
+l'appareil courant). Ça a nécessité d'introduire le premier backend du site
+— jusque-là 100% statique sans aucune donnée stockée nulle part.
+
+### Projet Firebase dédié
+
+- **Project ID** : `pendu-accessible-stats` (distinct de `pendu-accessible`
+  le nom du repo — Firestore, pas de Realtime Database, pas d'Auth)
+- **Firestore** : mode natif, région `eur3`
+- **App Web** : `pendu-accessible` (App ID `1:1037187434250:web:0cf7c74cf5e5f0f1aa5cf3`)
+- **Aucune authentification** : contrairement à petits-chevaux (auth anonyme
+  pour le multijoueur), ici les règles Firestore valident la *forme* de
+  l'écriture plutôt que l'identité — cohérent avec l'esprit "sans compte" du site.
+
+### Modèle de données
+
+Un seul type de document, **agrégé par jour** (pas un log par partie — reste
+borné dans le temps, lecture de `stats.html` toujours rapide même après
+plusieurs années) :
+```
+stats_daily/{YYYY-MM-DD}
+  { count: number }
+```
+Clé de date calculée **côté client, en heure locale du joueur** — limite
+assumée : dater côté serveur imposerait une Cloud Function et donc le plan
+payant Blaze, hors de proportion pour un compteur cosmétique.
+
+### Règles de sécurité (`firestore.rules`)
+
+```
+match /stats_daily/{day} {
+  allow read: if true;
+  allow create: if request.resource.data.count == 1
+                && request.resource.data.keys().hasOnly(['count']);
+  allow update: if request.resource.data.count == resource.data.count + 1
+                && request.resource.data.keys().hasOnly(['count']);
+  allow delete: if false;
+}
+```
+Empêche d'écrire une valeur arbitraire (seul un incrément exact de 1 est
+accepté, un seul champ autorisé) — vérifié manuellement via l'API REST
+Firestore (`curl` + clé API en query param, requis même pour un accès
+anonyme) : écriture directe `count: 5` rejetée (403), incrément `1 → 2`
+accepté, `2 → 10` rejeté. Reste possible de spammer des incréments légitimes
+(pas de rate-limiting en règles Firestore pures) : risque accepté, cohérent
+avec l'enjeu — un compteur cosmétique pour un jeu gratuit.
+
+`FieldValue.increment(1)` (utilisé côté client) est bien évalué par les
+règles **après** application du transform — `request.resource.data.count`
+reflète la valeur finale incrémentée, pas un sentinel opaque.
+
+### Écriture — `js/stats-writer.js`
+
+`recordGamePlayed()`, appelée dans `startGame()` (`main.js`) : **fire-and-forget
+strict**, aucun `await` dans le flux de jeu, toute erreur avalée (`try/catch`
++ `.catch(() => {})`). Le jeu doit rester 100% jouable même si Firestore est
+injoignable (réseau coupé, extension bloquante, etc.) — vérifié en coupant le
+réseau dans le navigateur.
+
+Une « partie jouée » = un nouveau mot présenté (inclut les clics sur
+« Nouveau mot »), pas seulement les parties menées à terme.
+
+### Lecture — `js/stats-page.js` (entrée de `stats-bundle.js`)
+
+Au chargement de `stats.html` : lit tous les documents `stats_daily`, calcule
+côté client :
+- Total = somme de tous les `count`
+- Jours écoulés = depuis le premier document enregistré (inclusif)
+- Moyenne/jour = total ÷ jours écoulés
+- Moyenne/semaine = moyenne/jour × 7, /mois = × 30,44, /an = × 365,25
+
+Toutes dérivées du même taux journalier — évite les effets de bord d'une
+moyenne calculée sur des semaines/mois incomplets. Trois états gérés en plus
+du contenu (`showState()`) : `stats-loading` (défaut), `stats-empty` (aucun
+document — site tout juste lancé), `stats-error` (Firestore injoignable).
+**Pas de graphique** — blocs de texte simples, même convention que la page
+stats de H2VL Connect.
+
+### SDK Firebase côté client
+
+SDK **compat** via `<script>` CDN (`firebase-app-compat.js` +
+`firebase-firestore-compat.js`, version `10.12.2` — alignée sur petits-chevaux)
+→ global `window.firebase`, compatible avec les bundles IIFE esbuild sans
+import ESM. Chargé sur `index.html` (écriture) et `stats.html` (lecture) ;
+**pas** sur `regles.html`/`accessibilite.html` (n'en ont pas besoin).
+
+### Mise en place initiale (faite une seule fois)
+
+```bash
+firebase projects:create pendu-accessible-stats
+gcloud services enable firestore.googleapis.com --project=pendu-accessible-stats
+gcloud firestore databases create --database='(default)' --location=eur3 \
+  --type=firestore-native --project=pendu-accessible-stats
+firebase apps:create web "pendu-accessible" --project pendu-accessible-stats
+firebase apps:sdkconfig WEB <APP_ID> --project pendu-accessible-stats  # récupère apiKey etc.
+
+# Déployer les règles (depuis pendu-accessible/, avec firebase.json + firestore.rules)
+firebase deploy --only firestore --project pendu-accessible-stats
+```
+
+### Déclaration de confidentialité
+
+`README.md` précise désormais : « Aucune donnée **personnelle** collectée —
+seul le nombre de parties jouées par jour est enregistré de façon anonyme ».
+Une note identique apparaît directement sur `stats.html`. Ne jamais revenir à
+« aucune donnée collectée » sans qualificatif — ce serait redevenu inexact.
 
 ---
 
@@ -284,11 +407,12 @@ for (const d of ['facile','moyen','difficile']) console.log(d, poolForDifficulty
 ## Commandes utiles
 
 ```bash
-# Rebuilder le bundle après modification d'un fichier js/
+# Rebuilder les bundles après modification d'un fichier js/
 npx esbuild js/main.js --bundle --outfile=bundle.js --format=iife --platform=browser
+npx esbuild js/stats-page.js --bundle --outfile=stats-bundle.js --format=iife --platform=browser
 
 # Committer et déployer
-git add bundle.js js/main.js [autres fichiers modifiés]
+git add bundle.js stats-bundle.js js/main.js js/stats-page.js [autres fichiers modifiés]
 git commit -m "description"
 git push origin master
 
@@ -297,4 +421,11 @@ gh run list --repo ateliernumerique37-tech/pendu-accessible
 
 # Régénérer l'image OG après modification du SVG source
 npx sharp-cli -i og-image.svg -o og-image.png resize 1200 630
+
+# Déployer une modification des règles Firestore (stats)
+firebase deploy --only firestore --project pendu-accessible-stats
+
+# Consulter les documents stats_daily via l'API REST (lecture admin)
+curl -s "https://firestore.googleapis.com/v1/projects/pendu-accessible-stats/databases/(default)/documents/stats_daily" \
+  -H "Authorization: Bearer $(gcloud auth print-access-token)"
 ```
