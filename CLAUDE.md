@@ -72,10 +72,11 @@ npx esbuild js/stats-page.js --bundle --outfile=stats-bundle.js --format=iife --
 
 ### `js/words.js` — Données et tirage
 
-- `ALL_WORDS` : ~1080 noms communs français (pas de noms propres, pas de mots
+- `ALL_WORDS` : ~1425 noms communs français (pas de noms propres, pas de mots
   composés à espace/trait d'union, pas de ligatures œ/æ — remplacées par "oe"/"ae"
   pour rester compatibles avec `normalize()`). Enrichi une première fois en
-  juillet 2026 (+738 mots, section « Enrichissement » en fin de tableau).
+  juillet 2026 (+738 mots, section « Enrichissement »), puis rééquilibré par
+  longueur exacte (+347 mots, section « Équilibrage des longueurs »).
 - **Le classement par difficulté n'est pas figé à l'écriture** : `poolForDifficulty()`
   filtre dynamiquement `ALL_WORDS` par longueur réelle (`word.length`). Évite tout
   risque d'erreur de comptage manuel lors de l'ajout de nouveaux mots.
@@ -87,7 +88,27 @@ npx esbuild js/stats-page.js --bundle --outfile=stats-bundle.js --format=iife --
 - `pickWord(difficulty, avoidWord)` : tire un mot au hasard, évite de reproposer
   immédiatement le mot précédent quand le pool le permet.
 
-Distribution actuelle (vérifiée par script) : 261 mots facile, 590 moyen, 227 difficile (1078 au total, tous uniques).
+Distribution actuelle (vérifiée par script) : 352 mots facile, 666 moyen, 407 difficile (1425 au total, tous uniques).
+
+**Équilibrage par longueur exacte (juillet 2026)** : `pickWord()` tire uniformément
+dans tout le pool de la difficulté (pas par longueur), donc **le tirage n'est
+équitable entre longueurs que si chaque longueur a le même nombre de mots**.
+Avant ce correctif, la répartition était très inégale (ex. 103 mots de 9 lettres
+contre 0 de 13 lettres — un mot de 13 lettres ne pouvait littéralement jamais
+sortir). Décision utilisateur : ne jamais retirer un mot existant, uniquement
+ajouter.
+- **Facile et moyen : parité exacte atteinte** par ajout pur — 4=176/5=176,
+  6=222/7=222/8=222. Les chances sont maintenant rigoureusement égales entre
+  longueurs sur ces deux difficultés.
+- **Difficile : parité exacte non atteinte, amélioration forte acceptée à la
+  place** — 9=103/10=109/11=75/12=52/13=35/14=33. Égaliser complètement
+  aurait demandé ~100 mots français courants de 13 et 14 lettres chacun,
+  irréaliste sans tomber dans un vocabulaire trop technique/obscur pour un
+  jeu grand public (choix explicite de l'utilisateur, voir juillet 2026).
+- Mots sourcés via 4 agents parallèles (un par lot de longueurs), chacun avec
+  la liste d'exclusion exacte des mots déjà existants à cette longueur pour
+  éviter les doublons — validé programmatiquement après coup (longueur exacte,
+  caractères valides, zéro doublon interne/externe) avant intégration.
 
 **Orthographe accentuée (juillet 2026)** : 217 mots contiennent désormais leur(s)
 accent(s) correct(s) (é/è/ê/à/â/ù/î/ô/ç). Taper une lettre sans accent trouve
