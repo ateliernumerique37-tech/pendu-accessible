@@ -38,6 +38,7 @@ pendu-accessible/
 ├── firebase.json           # Config déploiement des règles (projet pendu-accessible-stats)
 ├── robots.txt / sitemap.xml
 ├── og-image.svg / og-image.png  # Image de partage 1200×630 (svg = source, non précaché)
+├── sounds/succes.mp3      # Son de victoire (repris du projet echo)
 ├── .nojekyll
 └── js/                   # Sources ES Modules (main.js et stats-page.js committés, reste gitignoré)
     ├── main.js           # Orchestrateur du jeu — cycle de partie, init des écrans
@@ -45,13 +46,14 @@ pendu-accessible/
     ├── game.js            # Logique pure du jeu (aucun DOM)
     ├── ui.js              # Écrans, annonces ARIA, rendu des cases/lettres tentées
     ├── words.js           # Liste de mots + normalisation accents + tirage
-    └── stats-writer.js    # Écriture fire-and-forget du compteur (stats_daily)
+    ├── stats-writer.js    # Écriture fire-and-forget du compteur (stats_daily)
+    └── sound.js           # Lecture du son de victoire (best-effort)
 ```
 
 > **Règle Git** : `bundle.js`, `stats-bundle.js`, `js/main.js` et `js/stats-page.js`
 > sont commités (deux points d'entrée de bundle, comme `main.js`). `game.js`,
-> `ui.js`, `words.js`, `stats-writer.js` sont dans `.gitignore` (bundlés dans
-> `bundle.js`), comme pour petits-chevaux.
+> `ui.js`, `words.js`, `stats-writer.js`, `sound.js` sont dans `.gitignore`
+> (bundlés dans `bundle.js`), comme pour petits-chevaux.
 
 ---
 
@@ -210,7 +212,8 @@ DOMContentLoaded → showScreen('difficulty') → initDifficultyScreen(startGame
 startGame(difficulty) → createGame → renderAll → showScreen('game') → focus input
   → recordGamePlayed() (stats-writer.js, fire-and-forget, jamais bloquant)
 onGuess(letter) → guessLetter → renderAll
-  → phase 'won'/'lost' : announce assertive + showEndScreen (skip l'annonce normale)
+  → phase 'won' : announce assertive + showEndScreen + playSuccessSound() (sound.js, best-effort)
+  → phase 'lost' : announce assertive + showEndScreen (pas de son)
   → sinon : announceGuessResult (annonce polite normale)
 onNewWord() → startGame(state.difficulty, state.word)  // même difficulté, évite le mot précédent
 ```
@@ -252,8 +255,8 @@ manuel NVDA + Firefox reste nécessaire** avant de considérer la conformité RG
 Stratégie **network-first** pour le cœur de l'app (HTML/CSS/JS/manifest),
 identique à petits-chevaux v18+ : garantit que la dernière version déployée est
 toujours chargée quand l'appareil est en ligne, sans dépendre du bump manuel de
-`CACHE`. Version actuelle : `pendu-accessible-v2` (bump lors de l'ajout de
-`stats.html`/`stats-bundle.js` à `ASSETS`).
+`CACHE`. Version actuelle : `pendu-accessible-v3` (bump lors de l'ajout de
+`sounds/succes.mp3` à `ASSETS`).
 
 ### GitHub Pages
 

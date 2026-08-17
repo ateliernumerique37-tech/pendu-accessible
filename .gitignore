@@ -3,3 +3,4 @@ js/game.js
 js/ui.js
 js/words.js
 js/stats-writer.js
+js/sound.js

@@ -1604,6 +1604,17 @@
     }
   }
 
+  // js/sound.js
+  var successSound = new Audio("./sounds/succes.mp3");
+  function playSuccessSound() {
+    try {
+      successSound.currentTime = 0;
+      successSound.play().catch(() => {
+      });
+    } catch {
+    }
+  }
+
   // js/ui.js
   function $(id) {
     return document.getElementById(id);
@@ -1786,6 +1797,7 @@
     if (result.phase === "won") {
       announce(`Victoire ! Vous avez trouv\xE9 le mot ${state.word}.`, true);
       showEndScreen({ won: true, word: state.word });
+      playSuccessSound();
       return;
     }
     if (result.phase === "lost") {

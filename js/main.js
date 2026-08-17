@@ -1,6 +1,7 @@
 // Orchestrateur — point d'entrée du bundle.
 import { createGame, guessLetter, getBoxes } from './game.js';
 import { recordGamePlayed } from './stats-writer.js';
+import { playSuccessSound } from './sound.js';
 import {
   announce,
   announceGuessResult,
@@ -51,6 +52,7 @@ function onGuess(letter) {
   if (result.phase === 'won') {
     announce(`Victoire ! Vous avez trouvé le mot ${state.word}.`, true);
     showEndScreen({ won: true, word: state.word });
+    playSuccessSound();
     return;
   }
 
