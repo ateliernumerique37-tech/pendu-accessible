@@ -255,8 +255,8 @@ manuel NVDA + Firefox reste nécessaire** avant de considérer la conformité RG
 Stratégie **network-first** pour le cœur de l'app (HTML/CSS/JS/manifest),
 identique à petits-chevaux v18+ : garantit que la dernière version déployée est
 toujours chargée quand l'appareil est en ligne, sans dépendre du bump manuel de
-`CACHE`. Version actuelle : `pendu-accessible-v3` (bump lors de l'ajout de
-`sounds/succes.mp3` à `ASSETS`).
+`CACHE`. Version actuelle : `pendu-accessible-v4` (bump lors du passage du SDK
+Firebase en 12.19.0).
 
 ### GitHub Pages
 
@@ -357,7 +357,8 @@ stats de H2VL Connect.
 ### SDK Firebase côté client
 
 SDK **compat** via `<script>` CDN (`firebase-app-compat.js` +
-`firebase-firestore-compat.js`, version `10.12.2` — alignée sur petits-chevaux)
+`firebase-firestore-compat.js`, version `12.19.0` — alignée sur petits-chevaux ; passée de 10.12.2 le 26/10/2026,
+la série 10 n'étant plus maintenue)
 → global `window.firebase`, compatible avec les bundles IIFE esbuild sans
 import ESM. Chargé sur `index.html` (écriture) et `stats.html` (lecture) ;
 **pas** sur `regles.html`/`accessibilite.html` (n'en ont pas besoin).
